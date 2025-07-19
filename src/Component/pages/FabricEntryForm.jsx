@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { FiChevronDown } from 'react-icons/fi'
-import TOption1Form from './TransactionForms/TOption1Form';
-import TOption2Form from './TransactionForms/TOption2Form';
-import TOption3Form from './TransactionForms/TOption3Form';
+import CuttingEntry from './TransactionForms/CuttingEntry';
+import WorkEntry from './TransactionForms/WorkEntry';
+import FabricEntryFormModal from './TransactionForms/FabricEntryFormModal';
 
 function FabricEntryForm() {
   const [activeSection, setActiveSection] = useState('Master');
   const [showMasterDropdown, setShowMasterDropdown] = useState(false);
+  const [showTransactionDropdown, setShowTransactionDropdown] = useState(false);
+  // Multi-tab state for Transaction forms
+  const [openTransactionForms, setOpenTransactionForms] = useState([]); // array of values
+  const [activeTransactionForm, setActiveTransactionForm] = useState(null);
 
   // Dynamic options for Master dropdown
   const masterOptions = [
@@ -17,14 +21,11 @@ function FabricEntryForm() {
 
   // Dynamic options for Transaction dropdown
   const transactionOptions = [
-    { label: ' TOption 1', value: 'TransactionOption1' },
-    { label: ' TOption 2', value: 'TransactionOption2' },
-    { label: ' TOption 3', value: 'TransactionOption3' },
+    { label: 'Fabric Entry', value: 'FabricEntry' },
+    { label: 'Cutting Entry', value: 'cuttingEntry' },
+    { label: 'Work Entry', value: 'WorkEntry' },
   ];
-  const [showTransactionDropdown, setShowTransactionDropdown] = useState(false);
-  // Multi-tab state for Transaction forms
-  const [openTransactionForms, setOpenTransactionForms] = useState([]); // array of values
-  const [activeTransactionForm, setActiveTransactionForm] = useState(null);
+  
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -165,52 +166,52 @@ function FabricEntryForm() {
           Currently selected: <span className="font-semibold">{activeSection}</span>
         </div>
         {/* Transaction Forms as Modal */}
-        {activeSection === 'Transaction' && activeTransactionForm === 'TransactionOption1' && (
+        {activeSection === 'Transaction' && activeTransactionForm === 'FabricEntry' && (
           <Modal onClose={() => {
-            setOpenTransactionForms(prev => prev.filter(f => f !== 'TransactionOption1'));
+            setOpenTransactionForms(prev => prev.filter(f => f !== 'FabricEntry'));
             setActiveTransactionForm(prev => {
-              const remaining = openTransactionForms.filter(f => f !== 'TransactionOption1');
+              const remaining = openTransactionForms.filter(f => f !== 'FabricEntry');
               return remaining.length > 0 ? remaining[remaining.length - 1] : null;
             });
           }}>
-            <TOption1Form onClose={() => {
-              setOpenTransactionForms(prev => prev.filter(f => f !== 'TransactionOption1'));
+            <FabricEntryFormModal onClose={() => {
+              setOpenTransactionForms(prev => prev.filter(f => f !== 'FabricEntry'));
               setActiveTransactionForm(prev => {
-                const remaining = openTransactionForms.filter(f => f !== 'TransactionOption1');
+                const remaining = openTransactionForms.filter(f => f !== 'FabricEntry');
                 return remaining.length > 0 ? remaining[remaining.length - 1] : null;
               });
             }} />
           </Modal>
         )}
-        {activeSection === 'Transaction' && activeTransactionForm === 'TransactionOption2' && (
+        {activeSection === 'Transaction' && activeTransactionForm === 'cuttingEntry' && (
           <Modal onClose={() => {
-            setOpenTransactionForms(prev => prev.filter(f => f !== 'TransactionOption2'));
+            setOpenTransactionForms(prev => prev.filter(f => f !== 'cuttingEntry'));
             setActiveTransactionForm(prev => {
-              const remaining = openTransactionForms.filter(f => f !== 'TransactionOption2');
+              const remaining = openTransactionForms.filter(f => f !== 'cuttingEntry');
               return remaining.length > 0 ? remaining[remaining.length - 1] : null;
             });
           }}>
-            <TOption2Form onClose={() => {
-              setOpenTransactionForms(prev => prev.filter(f => f !== 'TransactionOption2'));
+            <CuttingEntry onClose={() => {
+              setOpenTransactionForms(prev => prev.filter(f => f !== 'cuttingEntry'));
               setActiveTransactionForm(prev => {
-                const remaining = openTransactionForms.filter(f => f !== 'TransactionOption2');
+                const remaining = openTransactionForms.filter(f => f !== 'cuttingEntry');
                 return remaining.length > 0 ? remaining[remaining.length - 1] : null;
               });
             }} />
           </Modal>
         )}
-        {activeSection === 'Transaction' && activeTransactionForm === 'TransactionOption3' && (
+        {activeSection === 'Transaction' && activeTransactionForm === 'WorkEntry' && (
           <Modal onClose={() => {
-            setOpenTransactionForms(prev => prev.filter(f => f !== 'TransactionOption3'));
+            setOpenTransactionForms(prev => prev.filter(f => f !== 'WorkEntry'));
             setActiveTransactionForm(prev => {
-              const remaining = openTransactionForms.filter(f => f !== 'TransactionOption3');
+              const remaining = openTransactionForms.filter(f => f !== 'WorkEntry');
               return remaining.length > 0 ? remaining[remaining.length - 1] : null;
             });
           }}>
-            <TOption3Form onClose={() => {
-              setOpenTransactionForms(prev => prev.filter(f => f !== 'TransactionOption3'));
+            <WorkEntry onClose={() => {
+              setOpenTransactionForms(prev => prev.filter(f => f !== 'WorkEntry'));
               setActiveTransactionForm(prev => {
-                const remaining = openTransactionForms.filter(f => f !== 'TransactionOption3');
+                const remaining = openTransactionForms.filter(f => f !== 'WorkEntry');
                 return remaining.length > 0 ? remaining[remaining.length - 1] : null;
               });
             }} />
