@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Header from "../../Common/Header";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
@@ -7,6 +7,7 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const passwordRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,6 +36,12 @@ function Login({ onLogin }) {
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-28 px-2 py-1.5 text-base rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sky-300"
                 autoComplete="username"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    passwordRef.current?.focus();
+                  }
+                }}
               />
             </div>
             <div className="flex flex-col items-start relative">
@@ -46,6 +53,7 @@ function Login({ onLogin }) {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-28 px-2 py-1.5 text-base rounded border border-gray-300 pr-8 focus:outline-none focus:ring-2 focus:ring-sky-300"
                 autoComplete="current-password"
+                ref={passwordRef}
               />
               <span
                 onClick={() => setShowPassword((v) => !v)}
